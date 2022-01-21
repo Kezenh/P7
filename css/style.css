@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 100px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.smoothBorder {
+    border-radius: 5px;
+}
+
+#logo {
+    width: 400px;
+}
+
+#mainResearch {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(210, 210, 210, 0.8);
+    width: 90%;
+    height: 60px;
+}
+
+#mainResearch__icon {
+    width: 30px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+#mainResearch__input {
+    border: none;
+    width: 100%;
+    background: rgba(0, 0, 0, 0);
+    margin: 10px 10px;
+}
+
+#mainResearch__input:focus {
+   outline: none;
+}
+
+#mainResearch__input::placeholder {
+    color: rgba(120, 120, 120, 1);
+}
+
+#inputsBox {
+    display: flex;
+    margin: 20px 0;
+    width: 90%;
+}
+
+.researchBox {
+    width: 200px;
+    height: 60px;
+    margin: 0 20px 0 0;
+    padding: 10px 10px;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.researchBox__chevronDown {
+    width: 20px;
+}
+
+#researchBox--ingredients {
+    background: rgba(7, 134, 201, 0.8);
+}
+
+#researchBox--devices {
+    background: rgba(61, 217, 102, 0.8);
+}
+
+#researchBox--utensils {
+    background: rgba(190, 14, 14, 0.8);
+}
