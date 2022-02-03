@@ -2,6 +2,43 @@ import { recipes } from "./recipes.js";
 
 //DOM Elements
 const recipesBox = document.getElementById("recipesBox");
+const researchBoxIngredients = document.getElementById("researchBox--ingredients");
+const researchBoxDevices = document.getElementById("researchBox--devices");
+const researchBoxUtensils = document.getElementById("researchBox--utensils");
+const researchBoxIngredientsExpanded = document.getElementById("researchBox--ingredients__expanded");
+const ingredientsBox = document.getElementById("ingredientsBox");
+const closeIngredients = document.getElementById("closeIngredients");
+const researchInputIngredients = document.getElementById("research__input__ingredients");
+const researchBoxDevicesExpanded = document.getElementById("researchBox--devices__expanded");
+const devicesBox = document.getElementById("devicesBox");
+const closeDevices = document.getElementById("closeDevices");
+const researchInputDevices = document.getElementById("research__input__devices");
+const researchBoxUtensilsExpanded = document.getElementById("researchBox--utensils__expanded");
+const utensilsBox = document.getElementById("utensilsBox");
+const closeUtensils = document.getElementById("closeUtensils");
+const researchInputUtensils = document.getElementById("research__input__utensils");
+
+//Events
+researchBoxIngredients.addEventListener("click", openResearchBoxIngredientsExpanded);
+closeIngredients.addEventListener("click", closeResearchBoxIngredientsExpanded);
+researchInputIngredients.addEventListener("keyup", getCorrespondingIngredients);
+researchBoxDevices.addEventListener("click", openResearchBoxDevicesExpanded);
+closeDevices.addEventListener("click", closeResearchBoxDevicesExpanded);
+researchInputDevices.addEventListener("keyup", getCorrespondingDevices);
+researchBoxUtensils.addEventListener("click", openResearchBoxUtensilsExpanded);
+closeUtensils.addEventListener("click", closeResearchBoxUtensilsExpanded);
+researchInputUtensils.addEventListener("keyup", getCorrespondingUtensils);
+
+//Variables
+let researchConstraints = {
+    "research" : "",
+    "ingredients" : [],
+    "devices" : [],
+    "utensils" : []
+};
+let ingredients = [];
+let devices = [];
+let utensils = [];
 
 //Functions
 function makeRecipeCard(recipe) {
@@ -77,9 +114,185 @@ function makeRecipeCard(recipe) {
 }
 
 function makeAllRecipes(){
-    for(let i = 0; i < recipes.length - 1; i++) {
+    for(let i = 0; i < recipes.length; i++) {
         makeRecipeCard(recipes[i]);
     }
 }
 
-makeAllRecipes();
+function getIngredients() {
+    for (let i = 0; i < recipes.length; i++) {
+        for (let y = 0; y < recipes[i].ingredients.length; y++) {
+            let ingredientExist = false;
+            for (let j = 0; j < ingredients.length; j++) {
+                if (recipes[i].ingredients[y].ingredient == ingredients[j]) {
+                    ingredientExist = true;
+                }
+            }
+            if (!(ingredientExist)) {
+                ingredients.push(recipes[i].ingredients[y].ingredient);
+            }
+        }
+    }
+    ingredients.sort();
+}
+
+function getDevices() {
+    for (let i = 0; i < recipes.length; i++) {
+        let deviceExist = false;
+        for (let j = 0; j < devices.length; j++) {
+            if (recipes[i].appliance == devices[j]) {
+                deviceExist = true;
+            }
+        }
+        if (!(deviceExist)) {
+            devices.push(recipes[i].appliance);
+        }
+    }
+    devices.sort();
+}
+
+function getUtensils() {
+    for (let i = 0; i < recipes.length; i++) {
+        for (let y = 0; y < recipes[i].utensils.length; y++) {
+            let utensilExist = false;
+            for (let j = 0; j < utensils.length; j++) {
+                if (recipes[i].utensils[y] == utensils[j]) {
+                    utensilExist = true;
+                }
+            }
+            if (!(utensilExist)) {
+                utensils.push(recipes[i].utensils[y]);
+            }
+        }
+    }
+    utensils.sort();
+}
+
+function makeIngredientsList() {
+    for (let i = 0; i < ingredients.length; i++) {
+        addIngredient(ingredients[i]);
+    }
+}
+
+function addIngredient(ingredient) {
+    const ingredientBox = document.createElement("div");
+    ingredientBox.classList.add("ingredientBox");
+    ingredientBox.innerText = ingredient;
+    ingredientsBox.appendChild(ingredientBox);
+    ingredientBox.addEventListener("click", function() {
+        closeResearchBoxIngredientsExpanded();
+    });
+}
+
+function openResearchBoxIngredientsExpanded() {
+    researchBoxIngredientsExpanded.style.display = "flex";
+    researchBoxIngredients.style.display = "none";
+    closeResearchBoxDevicesExpanded();
+    closeResearchBoxUtensilsExpanded();
+}
+
+function closeResearchBoxIngredientsExpanded() {
+    researchBoxIngredientsExpanded.style.display = "none";
+    researchBoxIngredients.style.display = "flex";
+}
+
+function getCorrespondingIngredients() {
+    ingredientsBox.innerHTML = "";
+    for (let i = 0; i < ingredients.length; i++) {
+        let string = ingredients[i].toLowerCase();
+        let substring = researchInputIngredients.value.toLowerCase();
+        if (string.includes(substring)) {
+            addIngredient(ingredients[i]);
+        }
+    }
+}
+
+function makeDevicesList() {
+    for (let i = 0; i < devices.length; i++) {
+        addDevice(devices[i]);
+    }
+}
+
+function addDevice(device) {
+    const deviceBox = document.createElement("div");
+    deviceBox.classList.add("deviceBox");
+    deviceBox.innerText = device;
+    devicesBox.appendChild(deviceBox);
+    deviceBox.addEventListener("click", function() {
+        closeResearchBoxDevicesExpanded();
+    });
+}
+
+function openResearchBoxDevicesExpanded() {
+    researchBoxDevicesExpanded.style.display = "flex";
+    researchBoxDevices.style.display = "none";
+    closeResearchBoxIngredientsExpanded();
+    closeResearchBoxUtensilsExpanded();
+}
+
+function closeResearchBoxDevicesExpanded() {
+    researchBoxDevicesExpanded.style.display = "none";
+    researchBoxDevices.style.display = "flex";
+}
+
+function getCorrespondingDevices() {
+    devicesBox.innerHTML = "";
+    for (let i = 0; i < devices.length; i++) {
+        let string = devices[i].toLowerCase();
+        let substring = researchInputDevices.value.toLowerCase();
+        if (string.includes(substring)) {
+            addDevice(devices[i]);
+        }
+    }
+}
+
+function makeUtensilsList() {
+    for (let i = 0; i < utensils.length; i++) {
+        addUtensil(utensils[i]);
+    }
+}
+
+function addUtensil(utensil) {
+    const utensilBox = document.createElement("div");
+    utensilBox.classList.add("utensilBox");
+    utensilBox.innerText = utensil;
+    utensilsBox.appendChild(utensilBox);
+    utensilBox.addEventListener("click", function() {
+        closeResearchBoxUtensilsExpanded();
+    });
+}
+
+function openResearchBoxUtensilsExpanded() {
+    researchBoxUtensilsExpanded.style.display = "flex";
+    researchBoxUtensils.style.display = "none";
+    closeResearchBoxIngredientsExpanded();
+    closeResearchBoxDevicesExpanded();
+}
+
+function closeResearchBoxUtensilsExpanded() {
+    researchBoxUtensilsExpanded.style.display = "none";
+    researchBoxUtensils.style.display = "flex";
+}
+
+function getCorrespondingUtensils() {
+    utensilsBox.innerHTML = "";
+    for (let i = 0; i < utensils.length; i++) {
+        let string = utensils[i].toLowerCase();
+        let substring = researchInputUtensils.value.toLowerCase();
+        if (string.includes(substring)) {
+            addUtensil(utensils[i]);
+        }
+    }
+}
+
+function initialization() {
+    makeAllRecipes();
+    getIngredients();
+    getDevices()
+    getUtensils();
+    makeIngredientsList();
+    makeDevicesList();
+    makeUtensilsList();
+}
+
+initialization();
