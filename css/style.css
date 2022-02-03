@@ -277,7 +277,6 @@ header {
     background: rgba(7, 134, 201, 1);
     padding: 5px 0 20px 20px;
     border-radius: 5px;
-    cursor: pointer;
 }
 
 #devicesBox {
@@ -289,7 +288,6 @@ header {
     background: rgba(61, 217, 102, 1);
     padding: 5px 0 20px 20px;
     border-radius: 5px;
-    cursor: pointer;
 }
 
 #utensilsBox {
@@ -301,5 +299,45 @@ header {
     background: rgba(190, 14, 14, 1);
     padding: 5px 0 20px 20px;
     border-radius: 5px;
+}
+
+#tagsBox {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#tagsBox div {
+    margin: 20px 20px 0 0;
+    height: 40px;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+#tagsBox div p {
+    margin: 0 0 0 15px;
+}
+
+#tagsBox div div {
+    margin: 0 15px 0 10px;
+}
+
+#tagsBox div div svg {
+    width: 20px;
     cursor: pointer;
+}
+
+
+.tags--blue {
+    background: rgba(7, 134, 201, 1);
+}
+
+.tags--green {
+    background: rgba(61, 217, 102, 1);
+}
+
+.tags--red {
+    background: rgba(190, 14, 14, 1);
 }

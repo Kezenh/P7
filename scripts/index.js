@@ -17,6 +17,7 @@ const researchBoxUtensilsExpanded = document.getElementById("researchBox--utensi
 const utensilsBox = document.getElementById("utensilsBox");
 const closeUtensils = document.getElementById("closeUtensils");
 const researchInputUtensils = document.getElementById("research__input__utensils");
+const tagsBox = document.getElementById("tagsBox");
 
 //Events
 researchBoxIngredients.addEventListener("click", openResearchBoxIngredientsExpanded);
@@ -176,11 +177,23 @@ function makeIngredientsList() {
 
 function addIngredient(ingredient) {
     const ingredientBox = document.createElement("div");
-    ingredientBox.classList.add("ingredientBox");
+    const tag = document.createElement("div");
+    const tagName = document.createElement("p");
+    const deleteTag = document.createElement("div");
     ingredientBox.innerText = ingredient;
+    ingredientBox.style.cursor ="pointer";
     ingredientsBox.appendChild(ingredientBox);
     ingredientBox.addEventListener("click", function() {
+        tag.classList.add("tags--blue");
+        tagName.innerText = ingredient;
+        deleteTag.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"></path></svg>';
+        tag.appendChild(tagName);
+        tag.appendChild(deleteTag);
+        tagsBox.appendChild(tag);
         closeResearchBoxIngredientsExpanded();
+    });
+    deleteTag.addEventListener("click", function() {
+        tag.remove();
     });
 }
 
@@ -215,11 +228,23 @@ function makeDevicesList() {
 
 function addDevice(device) {
     const deviceBox = document.createElement("div");
-    deviceBox.classList.add("deviceBox");
+    const tag = document.createElement("div");
+    const tagName = document.createElement("p");
+    const deleteTag = document.createElement("div");
     deviceBox.innerText = device;
+    deviceBox.style.cursor ="pointer";
     devicesBox.appendChild(deviceBox);
     deviceBox.addEventListener("click", function() {
+        tag.classList.add("tags--green");
+        tagName.innerText = device;
+        deleteTag.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"></path></svg>';
+        tag.appendChild(tagName);
+        tag.appendChild(deleteTag);
+        tagsBox.appendChild(tag);
         closeResearchBoxDevicesExpanded();
+    });
+    deleteTag.addEventListener("click", function() {
+        tag.remove();
     });
 }
 
@@ -254,11 +279,23 @@ function makeUtensilsList() {
 
 function addUtensil(utensil) {
     const utensilBox = document.createElement("div");
-    utensilBox.classList.add("utensilBox");
+    const tag = document.createElement("div");
+    const tagName = document.createElement("p");
+    const deleteTag = document.createElement("div");
     utensilBox.innerText = utensil;
+    utensilBox.style.cursor ="pointer";
     utensilsBox.appendChild(utensilBox);
     utensilBox.addEventListener("click", function() {
+        tag.classList.add("tags--red");
+        tagName.innerText = utensil;
+        deleteTag.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"></path></svg>';
+        tag.appendChild(tagName);
+        tag.appendChild(deleteTag);
+        tagsBox.appendChild(tag);
         closeResearchBoxUtensilsExpanded();
+    });
+    deleteTag.addEventListener("click", function() {
+        tag.remove();
     });
 }
 
