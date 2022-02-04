@@ -18,6 +18,7 @@ const utensilsBox = document.getElementById("utensilsBox");
 const closeUtensils = document.getElementById("closeUtensils");
 const researchInputUtensils = document.getElementById("research__input__utensils");
 const tagsBox = document.getElementById("tagsBox");
+const searchBar = document.getElementById("searchBar");
 
 //Events
 researchBoxIngredients.addEventListener("click", openResearchBoxIngredientsExpanded);
@@ -29,6 +30,7 @@ researchInputDevices.addEventListener("keyup", getCorrespondingDevices);
 researchBoxUtensils.addEventListener("click", openResearchBoxUtensilsExpanded);
 closeUtensils.addEventListener("click", closeResearchBoxUtensilsExpanded);
 researchInputUtensils.addEventListener("keyup", getCorrespondingUtensils);
+searchBar.addEventListener("keyup", researchRecipes);
 
 //Variables
 let researchConstraints = {
@@ -190,9 +192,23 @@ function addIngredient(ingredient) {
         tag.appendChild(tagName);
         tag.appendChild(deleteTag);
         tagsBox.appendChild(tag);
+        let dontExist = true;
+        for (let i = 0; i < researchConstraints.ingredients.length; i++) {
+            if (researchConstraints.ingredients[i] == ingredient) {
+                dontExist = false;
+            }
+        }
+        if (dontExist) {
+            researchConstraints.ingredients.push(ingredient);
+        }
         closeResearchBoxIngredientsExpanded();
     });
     deleteTag.addEventListener("click", function() {
+        for (let i = 0; i < researchConstraints.ingredients.length; i++) {
+            if (researchConstraints.ingredients[i] == ingredient) {
+                researchConstraints.ingredients.splice(i, 1);
+            }
+        }
         tag.remove();
     });
 }
@@ -241,9 +257,23 @@ function addDevice(device) {
         tag.appendChild(tagName);
         tag.appendChild(deleteTag);
         tagsBox.appendChild(tag);
+        let dontExist = true;
+        for (let i = 0; i < researchConstraints.devices.length; i++) {
+            if (researchConstraints.devices[i] == device) {
+                dontExist = false;
+            }
+        }
+        if (dontExist) {
+            researchConstraints.devices.push(device);
+        }
         closeResearchBoxDevicesExpanded();
     });
     deleteTag.addEventListener("click", function() {
+        for (let i = 0; i < researchConstraints.devices.length; i++) {
+            if (researchConstraints.devices[i] == device) {
+                researchConstraints.devices.splice(i, 1);
+            }
+        }
         tag.remove();
     });
 }
@@ -292,9 +322,23 @@ function addUtensil(utensil) {
         tag.appendChild(tagName);
         tag.appendChild(deleteTag);
         tagsBox.appendChild(tag);
+        let dontExist = true;
+        for (let i = 0; i < researchConstraints.utensils.length; i++) {
+            if (researchConstraints.utensils[i] == utensil) {
+                dontExist = false;
+            }
+        }
+        if (dontExist) {
+            researchConstraints.utensils.push(utensil);
+        }
         closeResearchBoxUtensilsExpanded();
     });
     deleteTag.addEventListener("click", function() {
+        for (let i = 0; i < researchConstraints.utensils.length; i++) {
+            if (researchConstraints.utensils[i] == utensil) {
+                researchConstraints.utensils.splice(i, 1);
+            }
+        }
         tag.remove();
     });
 }
@@ -319,6 +363,13 @@ function getCorrespondingUtensils() {
         if (string.includes(substring)) {
             addUtensil(utensils[i]);
         }
+    }
+}
+
+function researchRecipes() {
+    const regexSearch = /^[a-zA-Z,'.-]{3,}$/;
+    if (regexSearch.test(searchBar.value.trim())) {
+        recipesBox.innerHTML = "";
     }
 }
 
