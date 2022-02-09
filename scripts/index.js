@@ -390,63 +390,63 @@ function researchRecipes() {
     if (searchBar.value.trim().length > 2) {
         searchToLowerCase = searchBar.value.toLowerCase();
     }
-    for (let i = 0; i < recipes.length; i++) {
-        let nameToLowerCase = recipes[i].name.toLowerCase();
-        let descriptionToLowerCase = recipes[i].description.toLowerCase();
+    recipes.forEach(recipe => {
+        let nameToLowerCase = recipe.name.toLowerCase();
+        let descriptionToLowerCase = recipe.description.toLowerCase();
         let ingredientExist = false;
-        for (let y = 0; y < recipes[i].ingredients.length; y++) {
-            let ingredientToLowerCase = recipes[i].ingredients[y].ingredient.toLowerCase();
+        recipe.ingredients.forEach(ingredient => {
+            let ingredientToLowerCase = ingredient.ingredient.toLowerCase();
             if (ingredientToLowerCase.includes(searchToLowerCase)) {
                 ingredientExist = true;
             }
-        }
+        });
         if (nameToLowerCase.includes(searchToLowerCase) || descriptionToLowerCase.includes(searchToLowerCase) || ingredientExist) {
             let allIngredientsTagAreGood = true;
-            for (let j = 0; j < researchConstraints.ingredients.length; j++) {
-                let ingredientTagToLowerCase = researchConstraints.ingredients[j].toLowerCase();
+            researchConstraints.ingredients.forEach(ingredient => {
+                let ingredientTagToLowerCase = ingredient.toLowerCase();
                 let ingredientTagExist = false;
-                for (let a = 0; a < recipes[i].ingredients.length; a++) {
-                    let ingredientToLowerCase = recipes[i].ingredients[a].ingredient.toLowerCase();
+                recipe.ingredients.forEach(recipeIngredient => {
+                    let ingredientToLowerCase = recipeIngredient.ingredient.toLowerCase();
                     if (ingredientTagToLowerCase.includes(ingredientToLowerCase)) {
                         ingredientTagExist = true;
                     }
-                }
+                });
                 if (!(ingredientTagExist)) {
                     allIngredientsTagAreGood = false;
                 }
-            }
+            });
             if (allIngredientsTagAreGood) {
                 let allDevicesTagAreGood = true;
-                for (let j = 0; j < researchConstraints.devices.length; j++) {
-                    let deviceTagToLowerCase = researchConstraints.devices[j].toLowerCase();
-                    let deviceToLowerCase = recipes[i].appliance.toLowerCase();
+                researchConstraints.devices.forEach(device => {
+                    let deviceTagToLowerCase = device.toLowerCase();
+                    let deviceToLowerCase = recipe.appliance.toLowerCase();
                     if (!deviceTagToLowerCase.includes(deviceToLowerCase)) {
                         allDevicesTagAreGood = false;
                     }
-                }
+                });
                 if (allDevicesTagAreGood) {
                     let allUtensilsTagAreGood = true;
-                    for (let j = 0; j < researchConstraints.utensils.length; j++) {
-                        let utensilTagToLowerCase = researchConstraints.utensils[j].toLowerCase();
+                    researchConstraints.utensils.forEach(utensil => {
+                        let utensilTagToLowerCase = utensil.toLowerCase();
                         let utensilTagExist = false;
-                        for (let a = 0; a < recipes[i].utensils.length; a++) {
-                            let utensilToLowerCase = recipes[i].utensils[a].toLowerCase();
+                        recipe.utensils.forEach(recipeUtensil => {
+                            let utensilToLowerCase = recipeUtensil.toLowerCase();
                             if (utensilTagToLowerCase.includes(utensilToLowerCase)) {
                                 utensilTagExist = true;
                             }
-                        }
+                        });
                         if (!(utensilTagExist)) {
                             allUtensilsTagAreGood = false;
                         }
-                    }
+                    });
                     if (allUtensilsTagAreGood) {
-                        recipesToDisplay.push(recipes[i]);
+                        recipesToDisplay.push(recipe);
                         recipesBoxIsEmpty = false;
                     }
                 }
             }
         }
-    }
+    });
     if (recipesBoxIsEmpty) {
         recipesBox.innerText = "Aucune recette ne correspond à vos critères.";
     }
