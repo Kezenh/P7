@@ -39,100 +39,105 @@ let researchConstraints = {
     "devices" : [],
     "utensils" : []
 };
+let recipesToDisplay = [];
 let ingredients = [];
 let devices = [];
 let utensils = [];
 
 //Functions
-function makeRecipeCard(recipe) {
-    //DOM Elements
-    const recipeCard = document.createElement("article");
-    const recipeCardImg = document.createElement("div");
-    const recipeCardDescription = document.createElement("div");
-    const recipeCardDescriptionHeader = document.createElement("div");
-    const recipeCardDescriptionHeaderTitle = document.createElement("h2");
-    const recipeCardDescriptionHeaderTimeBox = document.createElement("div");
-    const recipeCardDescriptionHeaderTimeBoxTime = document.createElement("p");
-    const recipeCardDescriptionIngredients = document.createElement("div");
-    const recipeCardDescriptionRecipe = document.createElement("p");
-
-    //Classes
-    recipeCard.classList.add("recipeCard");
-    recipeCard.classList.add("smoothBorder");
-    recipeCardImg.classList.add("recipeCard__img");
-    recipeCardDescription.classList.add("recipeCard__description");
-    recipeCardDescriptionHeader.classList.add("recipeCard__description__header");
-    recipeCardDescriptionHeaderTitle.classList.add("recipeCard__description__header__title");
-    recipeCardDescriptionHeaderTimeBox.classList.add("recipeCard__description__header__timeBox");
-    recipeCardDescriptionHeaderTimeBoxTime.classList.add("recipeCard__description__header__timeBox__time");
-    recipeCardDescriptionIngredients.classList.add("recipeCard__description__ingredients");
-    recipeCardDescriptionRecipe.classList.add("recipeCard__description__recipe");
-
-    //Content
-    recipeCardDescriptionHeaderTitle.innerText = recipe.name;
-    recipeCardDescriptionHeaderTimeBox.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg>';
-    recipeCardDescriptionHeaderTimeBoxTime.innerText = recipe.time + " min";
-    recipeCardDescriptionRecipe.innerText = recipe.description;
-
-    //Nodes
-    recipesBox.appendChild(recipeCard);
-    recipeCard.appendChild(recipeCardImg);
-    recipeCard.appendChild(recipeCardDescription);
-    recipeCardDescription.appendChild(recipeCardDescriptionHeader);
-    recipeCardDescriptionHeader.appendChild(recipeCardDescriptionHeaderTitle);
-    recipeCardDescriptionHeader.appendChild(recipeCardDescriptionHeaderTimeBox);
-    recipeCardDescriptionHeaderTimeBox.appendChild(recipeCardDescriptionHeaderTimeBoxTime);
-    recipeCardDescription.appendChild(recipeCardDescriptionIngredients);
-    recipeCardDescription.appendChild(recipeCardDescriptionRecipe);
-
-    for (let i = 0;i < recipe.ingredients.length;i++) {
+function makeRecipesCards() {
+    for (let a = 0; a < recipesToDisplay.length; a++) {
         //DOM Elements
-        const recipeCardDescriptionIngredientsIngredient = document.createElement("div");
-        const recipeCardDescriptionIngredientsIngredientName = document.createElement("p");
-        const recipeCardDescriptionIngredientsIngredientQuantity = document.createElement("p");
+        const recipeCard = document.createElement("article");
+        const recipeCardImg = document.createElement("div");
+        const recipeCardDescription = document.createElement("div");
+        const recipeCardDescriptionHeader = document.createElement("div");
+        const recipeCardDescriptionHeaderTitle = document.createElement("h2");
+        const recipeCardDescriptionHeaderTimeBox = document.createElement("div");
+        const recipeCardDescriptionHeaderTimeBoxTime = document.createElement("p");
+        const recipeCardDescriptionIngredients = document.createElement("div");
+        const recipeCardDescriptionRecipe = document.createElement("p");
 
         //Classes
-        recipeCardDescriptionIngredientsIngredient.classList.add("recipe__card__description__ingredients__ingredient");
-        recipeCardDescriptionIngredientsIngredientName.classList.add("recipe__card__description__ingredients__ingredient__name");
-        recipeCardDescriptionIngredientsIngredientQuantity.classList.add("recipe__card__description__ingredients__ingredient__quantity");
+        recipeCard.classList.add("recipeCard");
+        recipeCard.classList.add("smoothBorder");
+        recipeCardImg.classList.add("recipeCard__img");
+        recipeCardDescription.classList.add("recipeCard__description");
+        recipeCardDescriptionHeader.classList.add("recipeCard__description__header");
+        recipeCardDescriptionHeaderTitle.classList.add("recipeCard__description__header__title");
+        recipeCardDescriptionHeaderTimeBox.classList.add("recipeCard__description__header__timeBox");
+        recipeCardDescriptionHeaderTimeBoxTime.classList.add("recipeCard__description__header__timeBox__time");
+        recipeCardDescriptionIngredients.classList.add("recipeCard__description__ingredients");
+        recipeCardDescriptionRecipe.classList.add("recipeCard__description__recipe");
 
         //Content
-        
-        if (recipe.ingredients[i].quantity != undefined) {
-            recipeCardDescriptionIngredientsIngredientName.innerText = recipe.ingredients[i].ingredient + " :";
-            if (recipe.ingredients[i].unit != undefined) {
-                recipeCardDescriptionIngredientsIngredientQuantity.innerText = recipe.ingredients[i].quantity + " " + recipe.ingredients[i].unit;
-            } else {
-                recipeCardDescriptionIngredientsIngredientQuantity.innerText = recipe.ingredients[i].quantity;
-            }
-        } else {
-            recipeCardDescriptionIngredientsIngredientName.innerText = recipe.ingredients[i].ingredient;
-        }
+        recipeCardDescriptionHeaderTitle.innerText = recipesToDisplay[a].name;
+        recipeCardDescriptionHeaderTimeBox.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg>';
+        recipeCardDescriptionHeaderTimeBoxTime.innerText = recipesToDisplay[a].time + " min";
+        recipeCardDescriptionRecipe.innerText = recipesToDisplay[a].description;
 
         //Nodes
-        recipeCardDescriptionIngredients.appendChild(recipeCardDescriptionIngredientsIngredient);
-        recipeCardDescriptionIngredientsIngredient.appendChild(recipeCardDescriptionIngredientsIngredientName);
-        recipeCardDescriptionIngredientsIngredient.appendChild(recipeCardDescriptionIngredientsIngredientQuantity);
+        recipesBox.appendChild(recipeCard);
+        recipeCard.appendChild(recipeCardImg);
+        recipeCard.appendChild(recipeCardDescription);
+        recipeCardDescription.appendChild(recipeCardDescriptionHeader);
+        recipeCardDescriptionHeader.appendChild(recipeCardDescriptionHeaderTitle);
+        recipeCardDescriptionHeader.appendChild(recipeCardDescriptionHeaderTimeBox);
+        recipeCardDescriptionHeaderTimeBox.appendChild(recipeCardDescriptionHeaderTimeBoxTime);
+        recipeCardDescription.appendChild(recipeCardDescriptionIngredients);
+        recipeCardDescription.appendChild(recipeCardDescriptionRecipe);
+
+        for (let i = 0;i < recipesToDisplay[a].ingredients.length;i++) {
+            //DOM Elements
+            const recipeCardDescriptionIngredientsIngredient = document.createElement("div");
+            const recipeCardDescriptionIngredientsIngredientName = document.createElement("p");
+            const recipeCardDescriptionIngredientsIngredientQuantity = document.createElement("p");
+
+            //Classes
+            recipeCardDescriptionIngredientsIngredient.classList.add("recipe__card__description__ingredients__ingredient");
+            recipeCardDescriptionIngredientsIngredientName.classList.add("recipe__card__description__ingredients__ingredient__name");
+            recipeCardDescriptionIngredientsIngredientQuantity.classList.add("recipe__card__description__ingredients__ingredient__quantity");
+
+            //Content
+            
+            if (recipesToDisplay[a].ingredients[i].quantity != undefined) {
+                recipeCardDescriptionIngredientsIngredientName.innerText = recipesToDisplay[a].ingredients[i].ingredient + " :";
+                if (recipesToDisplay[a].ingredients[i].unit != undefined) {
+                    recipeCardDescriptionIngredientsIngredientQuantity.innerText = recipesToDisplay[a].ingredients[i].quantity + " " + recipesToDisplay[a].ingredients[i].unit;
+                } else {
+                    recipeCardDescriptionIngredientsIngredientQuantity.innerText = recipesToDisplay[a].ingredients[i].quantity;
+                }
+            } else {
+                recipeCardDescriptionIngredientsIngredientName.innerText = recipesToDisplay[a].ingredients[i].ingredient;
+            }
+
+            //Nodes
+            recipeCardDescriptionIngredients.appendChild(recipeCardDescriptionIngredientsIngredient);
+            recipeCardDescriptionIngredientsIngredient.appendChild(recipeCardDescriptionIngredientsIngredientName);
+            recipeCardDescriptionIngredientsIngredient.appendChild(recipeCardDescriptionIngredientsIngredientQuantity);
+        }
     }
+    
 }
 
-function makeAllRecipes(){
+function initializeRecipesToDisplay(){
     for(let i = 0; i < recipes.length; i++) {
-        makeRecipeCard(recipes[i]);
+        recipesToDisplay.push(recipes[i]);
     }
 }
 
 function getIngredients() {
-    for (let i = 0; i < recipes.length; i++) {
-        for (let y = 0; y < recipes[i].ingredients.length; y++) {
+    ingredients = [];
+    for (let i = 0; i < recipesToDisplay.length; i++) {
+        for (let y = 0; y < recipesToDisplay[i].ingredients.length; y++) {
             let ingredientExist = false;
             for (let j = 0; j < ingredients.length; j++) {
-                if (recipes[i].ingredients[y].ingredient == ingredients[j]) {
+                if (recipesToDisplay[i].ingredients[y].ingredient == ingredients[j]) {
                     ingredientExist = true;
                 }
             }
             if (!(ingredientExist)) {
-                ingredients.push(recipes[i].ingredients[y].ingredient);
+                ingredients.push(recipesToDisplay[i].ingredients[y].ingredient);
             }
         }
     }
@@ -140,31 +145,33 @@ function getIngredients() {
 }
 
 function getDevices() {
-    for (let i = 0; i < recipes.length; i++) {
+    devices = [];
+    for (let i = 0; i < recipesToDisplay.length; i++) {
         let deviceExist = false;
         for (let j = 0; j < devices.length; j++) {
-            if (recipes[i].appliance == devices[j]) {
+            if (recipesToDisplay[i].appliance == devices[j]) {
                 deviceExist = true;
             }
         }
         if (!(deviceExist)) {
-            devices.push(recipes[i].appliance);
+            devices.push(recipesToDisplay[i].appliance);
         }
     }
     devices.sort();
 }
 
 function getUtensils() {
-    for (let i = 0; i < recipes.length; i++) {
-        for (let y = 0; y < recipes[i].utensils.length; y++) {
+    utensils = [];
+    for (let i = 0; i < recipesToDisplay.length; i++) {
+        for (let y = 0; y < recipesToDisplay[i].utensils.length; y++) {
             let utensilExist = false;
             for (let j = 0; j < utensils.length; j++) {
-                if (recipes[i].utensils[y] == utensils[j]) {
+                if (recipesToDisplay[i].utensils[y] == utensils[j]) {
                     utensilExist = true;
                 }
             }
             if (!(utensilExist)) {
-                utensils.push(recipes[i].utensils[y]);
+                utensils.push(recipesToDisplay[i].utensils[y]);
             }
         }
     }
@@ -172,6 +179,7 @@ function getUtensils() {
 }
 
 function makeIngredientsList() {
+    ingredientsBox.innerHTML = "";
     for (let i = 0; i < ingredients.length; i++) {
         addIngredient(ingredients[i]);
     }
@@ -183,7 +191,7 @@ function addIngredient(ingredient) {
     const tagName = document.createElement("p");
     const deleteTag = document.createElement("div");
     ingredientBox.innerText = ingredient;
-    ingredientBox.style.cursor ="pointer";
+    ingredientBox.style.cursor = "pointer";
     ingredientsBox.appendChild(ingredientBox);
     ingredientBox.addEventListener("click", function() {
         tag.classList.add("tags--blue");
@@ -202,6 +210,7 @@ function addIngredient(ingredient) {
             researchConstraints.ingredients.push(ingredient);
         }
         closeResearchBoxIngredientsExpanded();
+        researchRecipes();
     });
     deleteTag.addEventListener("click", function() {
         for (let i = 0; i < researchConstraints.ingredients.length; i++) {
@@ -210,6 +219,7 @@ function addIngredient(ingredient) {
             }
         }
         tag.remove();
+        researchRecipes();
     });
 }
 
@@ -237,6 +247,7 @@ function getCorrespondingIngredients() {
 }
 
 function makeDevicesList() {
+    devicesBox.innerHTML = "";
     for (let i = 0; i < devices.length; i++) {
         addDevice(devices[i]);
     }
@@ -248,7 +259,7 @@ function addDevice(device) {
     const tagName = document.createElement("p");
     const deleteTag = document.createElement("div");
     deviceBox.innerText = device;
-    deviceBox.style.cursor ="pointer";
+    deviceBox.style.cursor = "pointer";
     devicesBox.appendChild(deviceBox);
     deviceBox.addEventListener("click", function() {
         tag.classList.add("tags--green");
@@ -267,6 +278,7 @@ function addDevice(device) {
             researchConstraints.devices.push(device);
         }
         closeResearchBoxDevicesExpanded();
+        researchRecipes();
     });
     deleteTag.addEventListener("click", function() {
         for (let i = 0; i < researchConstraints.devices.length; i++) {
@@ -275,6 +287,7 @@ function addDevice(device) {
             }
         }
         tag.remove();
+        researchRecipes();
     });
 }
 
@@ -302,6 +315,7 @@ function getCorrespondingDevices() {
 }
 
 function makeUtensilsList() {
+    utensilsBox.innerHTML = "";
     for (let i = 0; i < utensils.length; i++) {
         addUtensil(utensils[i]);
     }
@@ -313,7 +327,7 @@ function addUtensil(utensil) {
     const tagName = document.createElement("p");
     const deleteTag = document.createElement("div");
     utensilBox.innerText = utensil;
-    utensilBox.style.cursor ="pointer";
+    utensilBox.style.cursor = "pointer";
     utensilsBox.appendChild(utensilBox);
     utensilBox.addEventListener("click", function() {
         tag.classList.add("tags--red");
@@ -332,6 +346,7 @@ function addUtensil(utensil) {
             researchConstraints.utensils.push(utensil);
         }
         closeResearchBoxUtensilsExpanded();
+        researchRecipes();
     });
     deleteTag.addEventListener("click", function() {
         for (let i = 0; i < researchConstraints.utensils.length; i++) {
@@ -340,6 +355,7 @@ function addUtensil(utensil) {
             }
         }
         tag.remove();
+        researchRecipes();
     });
 }
 
@@ -367,20 +383,90 @@ function getCorrespondingUtensils() {
 }
 
 function researchRecipes() {
-    const regexSearch = /^[a-zA-Z,'.-]{3,}$/;
-    if (regexSearch.test(searchBar.value.trim())) {
-        recipesBox.innerHTML = "";
+    recipesToDisplay = [];
+    recipesBox.innerHTML = "";
+    let searchToLowerCase = "";
+    let recipesBoxIsEmpty = true;
+    if (searchBar.value.trim().length > 2) {
+        searchToLowerCase = searchBar.value.toLowerCase();
     }
+    for (let i = 0; i < recipes.length; i++) {
+        let nameToLowerCase = recipes[i].name.toLowerCase();
+        let descriptionToLowerCase = recipes[i].description.toLowerCase();
+        let ingredientExist = false;
+        for (let y = 0; y < recipes[i].ingredients.length; y++) {
+            let ingredientToLowerCase = recipes[i].ingredients[y].ingredient.toLowerCase();
+            if (ingredientToLowerCase.includes(searchToLowerCase)) {
+                ingredientExist = true;
+            }
+        }
+        if (nameToLowerCase.includes(searchToLowerCase) || descriptionToLowerCase.includes(searchToLowerCase) || ingredientExist) {
+            let allIngredientsTagAreGood = true;
+            for (let j = 0; j < researchConstraints.ingredients.length; j++) {
+                let ingredientTagToLowerCase = researchConstraints.ingredients[j].toLowerCase();
+                let ingredientTagExist = false;
+                for (let a = 0; a < recipes[i].ingredients.length; a++) {
+                    let ingredientToLowerCase = recipes[i].ingredients[a].ingredient.toLowerCase();
+                    if (ingredientTagToLowerCase.includes(ingredientToLowerCase)) {
+                        ingredientTagExist = true;
+                    }
+                }
+                if (!(ingredientTagExist)) {
+                    allIngredientsTagAreGood = false;
+                }
+            }
+            if (allIngredientsTagAreGood) {
+                let allDevicesTagAreGood = true;
+                for (let j = 0; j < researchConstraints.devices.length; j++) {
+                    let deviceTagToLowerCase = researchConstraints.devices[j].toLowerCase();
+                    let deviceToLowerCase = recipes[i].appliance.toLowerCase();
+                    if (!deviceTagToLowerCase.includes(deviceToLowerCase)) {
+                        allDevicesTagAreGood = false;
+                    }
+                }
+                if (allDevicesTagAreGood) {
+                    let allUtensilsTagAreGood = true;
+                    for (let j = 0; j < researchConstraints.utensils.length; j++) {
+                        let utensilTagToLowerCase = researchConstraints.utensils[j].toLowerCase();
+                        let utensilTagExist = false;
+                        for (let a = 0; a < recipes[i].utensils.length; a++) {
+                            let utensilToLowerCase = recipes[i].utensils[a].toLowerCase();
+                            if (utensilTagToLowerCase.includes(utensilToLowerCase)) {
+                                utensilTagExist = true;
+                            }
+                        }
+                        if (!(utensilTagExist)) {
+                            allUtensilsTagAreGood = false;
+                        }
+                    }
+                    if (allUtensilsTagAreGood) {
+                        recipesToDisplay.push(recipes[i]);
+                        recipesBoxIsEmpty = false;
+                    }
+                }
+            }
+        }
+    }
+    if (recipesBoxIsEmpty) {
+        recipesBox.innerText = "Aucune recette ne correspond à vos critères.";
+    }
+    makeRecipesCards();
+    makeAdvancedSearchList();
 }
 
-function initialization() {
-    makeAllRecipes();
+function makeAdvancedSearchList() {
     getIngredients();
     getDevices()
     getUtensils();
     makeIngredientsList();
     makeDevicesList();
     makeUtensilsList();
+}
+
+function initialization() {
+    initializeRecipesToDisplay();
+    makeRecipesCards();
+    makeAdvancedSearchList();
 }
 
 initialization();
