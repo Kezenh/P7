@@ -198,7 +198,7 @@ header {
 .recipeCard__description__header__title {
     font-size: 1.3rem;
     font-weight: normal;
-    text-overflow: " ...";
+    text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
