@@ -456,7 +456,7 @@ function researchRecipes() {
 
 function makeAdvancedSearchList() {
     getIngredients();
-    getDevices()
+    getDevices();
     getUtensils();
     makeIngredientsList();
     makeDevicesList();
